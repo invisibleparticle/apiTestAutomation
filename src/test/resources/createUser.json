@@ -1,0 +1,16 @@
+{
+  "id": 11,
+  "name": "Jitendra Kumar",
+  "username": "jitu123",
+  "email": "Jitu@Jitu.Jitu",
+  "address": {
+    "street": "Halfway Street",
+    "suite": "198A",
+    "city": "Sidcup",
+    "zipcode": "da158dj",
+    "geo": {
+      "lat": "29.4572",
+      "lng": "-164.2990"
+    }
+  }
+}
