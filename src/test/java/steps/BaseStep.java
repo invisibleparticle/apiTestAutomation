@@ -6,7 +6,7 @@ import utils.*;
 public class BaseStep
 {
 
-    private ScenarioSpecific scenarioObj;//scenario specific object
+    private ScenarioSpecific scenarioObj;//scenario specific shared object
     private GetRequest GetRequestObj;
     private PutRequest PutRequestObj;
     private PostRequest PostRequestObj;
@@ -14,19 +14,21 @@ public class BaseStep
     private utils.MapUtils MapUtilsObj;
     private FileUtils FileUtilsObj;
 
+
+
+    //create shared scenariospecific object
+    public BaseStep()
+    {
+        scenarioObj = new ScenarioSpecific();
+    }
+
+
+
     //returns the scenario specific object to caller
     public ScenarioSpecific getScenarioObject()
     {
         return scenarioObj;
     }
-
-    //call ScenarioSpecific and return scenariospecific object
-    public ScenarioSpecific initializeScenarioObject()
-    {
-        scenarioObj = new ScenarioSpecific();
-        return scenarioObj;
-    }
-
 
     public GetRequest getGetRequestObj()
     {
