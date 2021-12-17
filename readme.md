@@ -23,9 +23,9 @@ plugin = {"pretty", "html:**target/cucumber.html**", "json:**target/cucumber.jso
 
 
 * Test cases are in src/test/java folder
-* baseObjects package contains ScenarioSpecific class which contains scenario exclusive objects which is to be used to hold and share data from/to scenario STEPS
+* baseClasses package contains ScenarioSpecific class which contains scenario exclusive objects which is to be used to hold and share data from/to scenario STEPS
 * features folder contains all the feature files
 * steps folder contains StepDefinitions of Gherkin scenario steps
 * testRunners package contains cucumber Runner class
-* utils folder contains FuncUtil class which stores all the common items of the framework
+* utils folder contains classes which has methods to perform specific utilities 
 * Test resources like properties file and json payload are in src/test/resources folder

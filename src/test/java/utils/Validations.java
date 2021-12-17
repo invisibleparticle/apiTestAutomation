@@ -1,6 +1,6 @@
 package utils;
 
-import baseObjects.ScenarioSpecific;
+import baseClasses.ScenarioSpecific;
 
 /**
  * validations items

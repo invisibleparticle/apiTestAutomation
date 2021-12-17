@@ -1,6 +1,6 @@
 package utils;
 
-import baseObjects.ScenarioSpecific;
+import baseClasses.ScenarioSpecific;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 

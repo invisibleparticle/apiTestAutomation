@@ -1,11 +1,10 @@
 package steps;
 
-import baseObjects.ScenarioSpecific;
+import baseClasses.ScenarioSpecific;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.Assert;
-import utils.*;
 
 import java.io.File;
 import java.util.HashMap;

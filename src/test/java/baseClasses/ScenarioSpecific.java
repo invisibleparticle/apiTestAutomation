@@ -1,4 +1,4 @@
-package baseObjects;
+package baseClasses;
 
 import io.restassured.response.Response;
 

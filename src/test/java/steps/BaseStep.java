@@ -1,6 +1,6 @@
 package steps;
 
-import baseObjects.*;
+import baseClasses.*;
 import utils.*;
 
 public class BaseStep
