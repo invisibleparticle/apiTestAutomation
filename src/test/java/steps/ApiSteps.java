@@ -22,18 +22,19 @@ public class ApiSteps
     @Given("^I set '(.+)' api request details as (.+)$")
     public void i_set_api_request(String requestType, String requestDetails)
     {
-        baseStep.getScenarioObject().baseURI = baseStep.getFileUtilsObj().readPropertiesFile(ScenarioSpecific.dataPropertiesFile, "baseURI");//Set baseURI
+        ScenarioSpecific scenarioObj = baseStep.initializeScenarioObject();//intialize ScenarioSpecific object
+        scenarioObj.baseURI = baseStep.getFileUtilsObj().readPropertiesFile(ScenarioSpecific.dataPropertiesFile, "baseURI");//Get baseURI
         //Add details to appropriate hashmap
         HashMap map;
         if (requestType.equals("POST"))
         {
-            map = baseStep.getScenarioObject().POSTRequestDetails;//For post request put value in POSTRequestDetails
+            map = scenarioObj.POSTRequestDetails;//For post request put value in POSTRequestDetails
         } else if (requestType.equals("PUT"))
         {
-            map = baseStep.getScenarioObject().PUTRequestDetails;//For put request put value in PUTRequestDetails
+            map = scenarioObj.PUTRequestDetails;//For put request put value in PUTRequestDetails
         } else
         {
-            map = baseStep.getScenarioObject().GETRequestDetails;//else put value  in GETRequestDetails
+            map = scenarioObj.GETRequestDetails;//else put value  in GETRequestDetails
         }
 
         String result = baseStep.getMapUtilsObj().putInMap(map, requestDetails);
@@ -47,14 +48,16 @@ public class ApiSteps
     @When("^I send GET request using (.+)$")
     public void I_send_GET_request(String searchCriteria)
     {
-        baseStep.getMapUtilsObj().putInMap(baseStep.getScenarioObject().queryParams, searchCriteria);//put query param key value to queryParams map
-        baseStep.getScenarioObject().apiResponse = baseStep.getGetRequestObj().sendGETRequest(baseStep.getScenarioObject());//send get request
+        ScenarioSpecific scenarioObj = baseStep.getScenarioObject();//Get the scenario specific object
+        baseStep.getMapUtilsObj().putInMap(scenarioObj.queryParams, searchCriteria);//put query param key value to queryParams map
+        scenarioObj.apiResponse = baseStep.getGetRequestObj().sendGETRequest(scenarioObj);//send get request
     }
 
     @Then("^I receive response having successful validations (.+)$")
     public void I_receive_response_having_successful_validations(String validationsData)
     {
-        String result = baseStep.getValidationsObj().validation(baseStep.getScenarioObject(), validationsData);//Do the validation of response and validation data
+        ScenarioSpecific scenarioObj = baseStep.getScenarioObject();//Get the scenario specific object
+        String result = baseStep.getValidationsObj().validation(scenarioObj, validationsData);//Do the validation of response and validation data
         if (!result.equals("$$pass$$"))
         {
             Assert.fail(result);//fail if result returns non $$pass$$ value
@@ -64,23 +67,25 @@ public class ApiSteps
     @When("^I send POST request using (.+)$")
     public void I_send_POST_request_using(String payloadFile)
     {
-
+        ScenarioSpecific scenarioObj = baseStep.getScenarioObject();//Get the scenario specific object
         File jsonFile = new File(ScenarioSpecific.resourcePath + "/" + payloadFile);//get payload file
-        baseStep.getScenarioObject().apiResponse = baseStep.getPostRequestObj().sendPOSTRequest(baseStep.getScenarioObject(), jsonFile);//send post request
+        scenarioObj.apiResponse = baseStep.getPostRequestObj().sendPOSTRequest(scenarioObj, jsonFile);//send post request
     }
 
     @Then("^I receive response (.+) code for api response status code")
     public void I_recive_response(String responseCode)
     {
+        ScenarioSpecific scenarioObj = baseStep.getScenarioObject();
         int code = Integer.parseInt(responseCode);
-        Assert.assertEquals(code, baseStep.getScenarioObject().apiResponse.statusCode());
+        Assert.assertEquals(code, scenarioObj.apiResponse.statusCode());
     }
 
     @When("^I send PUT request using (.+)$")
     public void I_send_PUT_request_using(String payloadFile)
     {
+        ScenarioSpecific scenarioObj = baseStep.getScenarioObject();//Get the scenario specific object
         File jsonFile = new File(ScenarioSpecific.resourcePath + "/" + payloadFile);//get payload file
-        baseStep.getScenarioObject().apiResponse = baseStep.getPutRequestObj().sendPUTRequest(baseStep.getScenarioObject(), jsonFile);//send put request
+        scenarioObj.apiResponse = baseStep.getPutRequestObj().sendPUTRequest(scenarioObj, jsonFile);//send put request
     }
 
     @Then("^To test the scenario- (.+)$")
