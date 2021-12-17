@@ -5,12 +5,10 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.Assert;
-import utils.FuncUtil;
+import utils.*;
 
 import java.io.File;
 import java.util.HashMap;
-
-import static utils.FuncUtil.*;
 
 public class ApiSteps
 {
@@ -26,7 +24,7 @@ public class ApiSteps
     public void i_set_api_request(String requestType, String requestDetails)
     {
         ScenarioSpecific scenarioObj = baseStep.initializeScenarioObject();//intialize ScenarioSpecific object
-        scenarioObj.baseURI = FuncUtil.readPropertiesFile(ScenarioSpecific.dataPropertiesFile, "baseURI");//Get baseURI
+        scenarioObj.baseURI = baseStep.getFileUtilsObj().readPropertiesFile(ScenarioSpecific.dataPropertiesFile, "baseURI");//Get baseURI
         //Add details to appropriate hashmap
         HashMap map;
         if (requestType.equals("POST"))
@@ -40,7 +38,7 @@ public class ApiSteps
             map = scenarioObj.GETRequestDetails;//else put value  in GETRequestDetails
         }
 
-        String result = putInMap(map, requestDetails);
+        String result = baseStep.getMapUtilsObj().putInMap(map, requestDetails);
         if (!result.equals("$$pass$$"))
         {
             Assert.fail(result);//fail if result returns non $$pass$$ value
@@ -52,15 +50,15 @@ public class ApiSteps
     public void I_send_GET_request(String searchCriteria)
     {
         ScenarioSpecific scenarioObj = baseStep.getScenarioObject();//Get the scenario specific object
-        putInMap(scenarioObj.queryParams, searchCriteria);//put query param key value to queryParams map
-        scenarioObj.apiResponse = sendGETRequest(scenarioObj);//send get request
+        baseStep.getMapUtilsObj().putInMap(scenarioObj.queryParams, searchCriteria);//put query param key value to queryParams map
+        scenarioObj.apiResponse = baseStep.getGetRequestObj().sendGETRequest(scenarioObj);//send get request
     }
 
     @Then("^I receive response having successful validations (.+)$")
     public void I_receive_response_having_successful_validations(String validationsData)
     {
         ScenarioSpecific scenarioObj = baseStep.getScenarioObject();//Get the scenario specific object
-        String result = validation(scenarioObj, validationsData);//Do the validation of response and validation data
+        String result = baseStep.getValidationsObj().validation(scenarioObj, validationsData);//Do the validation of response and validation data
         if (!result.equals("$$pass$$"))
         {
             Assert.fail(result);//fail if result returns non $$pass$$ value
@@ -72,7 +70,7 @@ public class ApiSteps
     {
         ScenarioSpecific scenarioObj = baseStep.getScenarioObject();//Get the scenario specific object
         File jsonFile = new File(ScenarioSpecific.resourcePath + "/" + payloadFile);//get payload file
-        scenarioObj.apiResponse = sendPOSTRequest(scenarioObj, jsonFile);//send post request
+        scenarioObj.apiResponse = baseStep.getPostRequestObj().sendPOSTRequest(scenarioObj, jsonFile);//send post request
     }
 
     @Then("^I receive response (.+) code for api response status code")
@@ -88,7 +86,7 @@ public class ApiSteps
     {
         ScenarioSpecific scenarioObj = baseStep.getScenarioObject();//Get the scenario specific object
         File jsonFile = new File(ScenarioSpecific.resourcePath + "/" + payloadFile);//get payload file
-        scenarioObj.apiResponse = sendPUTRequest(scenarioObj, jsonFile);//send put request
+        scenarioObj.apiResponse = baseStep.getPutRequestObj().sendPUTRequest(scenarioObj, jsonFile);//send put request
     }
 
     @Then("^To test the scenario- (.+)$")
